@@ -16,11 +16,17 @@ canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
 const ctx = canvas.getContext('2d');
-
+let added = false;
 const renderLoop = () => {
     drawGrid();
     drawCells();
     universe.tick();
+
+    if (!added) {
+        universe.add_spaceship(10, 10);
+        added = true;
+    }
+
   
     requestAnimationFrame(renderLoop);
 };

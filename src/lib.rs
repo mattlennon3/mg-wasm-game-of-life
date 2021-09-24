@@ -26,12 +26,8 @@ impl Universe {
         let height = 64;
 
         let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
-                    Cell::Alive
-                } else {
+            .map(|_| {
                     Cell::Dead
-                }
             })
             .collect();
 
@@ -40,6 +36,38 @@ impl Universe {
             height,
             cells,
         }
+    }
+
+    // look at glider.png to see what we were following
+    pub fn add_spaceship(&mut self, x: u32, y: u32) -> () {
+        let mut next = self.cells.clone();
+
+        let mut living_cells: Vec<usize> = Vec::new();
+
+        // 1
+        living_cells.push(self.get_index(x, y));
+        // 2
+        living_cells.push(self.get_index(x + 1, y));
+        // 3
+        living_cells.push(self.get_index(x + 2, y));
+        // 4
+        living_cells.push(self.get_index(x + 3, y));
+        // 5
+        living_cells.push(self.get_index(x, y + 1));
+        // 6
+        living_cells.push(self.get_index(x + 4, y + 1));
+        // 7
+        living_cells.push(self.get_index(x, y + 2));
+        // 8
+        living_cells.push(self.get_index(x + 1, y + 3));
+        // 9
+        living_cells.push(self.get_index(x + 4, y + 3));
+
+        living_cells.iter().for_each(|cell| {
+            next[*cell] = Cell::Alive;
+        });
+
+        self.cells = next;
     }
 
     pub fn render(&self) -> String {
