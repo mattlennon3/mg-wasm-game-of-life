@@ -8,6 +8,7 @@ const ALIVE_COLOR = "#000000";
 
 const canvas = document.getElementById("game-of-life-canvas");
 const playPauseButton = document.getElementById("play-pause");
+const tickRangeSlider = document.getElementById("tick-range");
 
 const universe = Universe.new();
 const width = universe.width();
@@ -19,18 +20,21 @@ canvas.width = (CELL_SIZE + 1) * width + 1;
 const ctx = canvas.getContext('2d');
 
 let animationId = null;
+let rangeValue = 1;
 let added = false;
 const renderLoop = () => {
     drawGrid();
     drawCells();
     
-    universe.tick();
+    for (let i = 0; i <= rangeValue; i++) {
+        universe.tick();
+    }
 
     if (!added) {
         universe.add_spaceship(10, 10);
         added = true;
     }
-    
+
     animationId = requestAnimationFrame(renderLoop);
 };
 
@@ -106,6 +110,10 @@ const drawCells = () => {
 
     ctx.stroke();
 };
+
+tickRangeSlider.addEventListener('change', (event) => {
+    rangeValue = event.target.value;
+})
 
 canvas.addEventListener("click", event => {
     const boundingRect = canvas.getBoundingClientRect();
