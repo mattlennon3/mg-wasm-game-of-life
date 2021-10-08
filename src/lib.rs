@@ -1,6 +1,7 @@
 mod utils;
 
 use core::{fmt, panic};
+use rand::Rng;
 
 use wasm_bindgen::prelude::*;
 
@@ -53,6 +54,31 @@ impl Universe {
             cells,
         }
     }
+
+    pub fn all_dead(&mut self) -> () {
+        let mut next = self.cells.clone();
+
+        next = next.iter().map(|_cell| Cell::Dead).collect();
+
+        self.cells = next;
+    }
+
+    pub fn randomise(&mut self) -> () {
+        let mut next = self.cells.clone();
+
+        let mut rng = rand::thread_rng();
+        
+        next = next.iter().map(|_cell| {
+            let rand_bool = rng.gen::<bool>();
+            match rand_bool {
+                true => Cell::Alive,
+                false => Cell::Dead
+            }
+        }).collect();
+
+        self.cells = next;
+    }
+
 
     // look at glider.png to see what we were following
     pub fn add_spaceship(&mut self, x: u32, y: u32) -> () {

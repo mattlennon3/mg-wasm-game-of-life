@@ -8,6 +8,8 @@ const ALIVE_COLOR = "#000000";
 
 const canvas = document.getElementById("game-of-life-canvas");
 const playPauseButton = document.getElementById("play-pause");
+const setDeadButton = document.getElementById("set-dead");
+const randomiseButton = document.getElementById("randomise");
 const tickRangeSlider = document.getElementById("tick-range");
 
 const universe = Universe.new();
@@ -61,6 +63,19 @@ playPauseButton.addEventListener("click", event => {
     pause();
   }
 });
+
+setDeadButton.addEventListener('click', () => {
+  universe.all_dead();
+});
+
+setDeadButton.textContent = "💀";
+
+randomiseButton.addEventListener('click', () => {
+  universe.randomise();
+});
+
+randomiseButton.textContent = "🎲";
+
 
 const getIndex = (row, column) => {
     return row * width + column;
