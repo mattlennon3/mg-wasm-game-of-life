@@ -66,12 +66,14 @@ playPauseButton.addEventListener("click", event => {
 
 setDeadButton.addEventListener('click', () => {
   universe.all_dead();
+  drawCells();
 });
 
 setDeadButton.textContent = "💀";
 
 randomiseButton.addEventListener('click', () => {
   universe.randomise();
+  drawCells();
 });
 
 randomiseButton.textContent = "🎲";
