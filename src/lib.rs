@@ -112,6 +112,35 @@ impl Universe {
         self.cells = next;
     }
 
+// Vec<(u32, u32)>
+    pub fn parse_text_input(&self) -> () {
+        let example = String::from("..OOO...OOO
+
+O....O.O....O
+O....O.O....O
+O....O.O....O
+..OOO...OOO
+
+..OOO...OOO
+O....O.O....O
+O....O.O....O
+O....O.O....O
+
+..OOO...OOO");
+
+        // Splitting on "" produces an empty
+        // string on either end of the array so we filter these about before collecting them as a Vector of &str.
+
+        example.split("")
+            .filter(|x| !x.is_empty())
+            .for_each(|char| {
+            unsafe {
+                log!("{}", char);
+            }
+        });
+    }
+
+    
     pub fn render(&self) -> String {
         self.to_string()
     }

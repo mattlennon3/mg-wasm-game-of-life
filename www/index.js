@@ -16,6 +16,8 @@ const universe = Universe.new();
 const width = universe.width();
 const height = universe.height();
 
+universe.parse_text_input();
+
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
@@ -143,8 +145,13 @@ canvas.addEventListener("click", event => {
   
     const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
     const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+
+    if(event.shiftKey) {
+      universe.add_spaceship(row, col);
+    } else {
+      universe.toggle_cell(row, col);
+    }
   
-    universe.toggle_cell(row, col);
   
     drawGrid();
     drawCells();
