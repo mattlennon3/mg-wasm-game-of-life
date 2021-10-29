@@ -4,6 +4,7 @@ use core::{fmt, panic};
 use rand::Rng;
 
 use wasm_bindgen::prelude::*;
+use std::convert::TryInto;
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -113,14 +114,24 @@ impl Universe {
     }
 
     pub fn place_item_on_grid(&mut self, x: u32, y: u32, input_string: &str) -> () {
-        let thing_to_place = self.parse_text_input(parse_text_input);
+        let mut next = self.cells.clone();
+        let thing_to_place = self.parse_text_input(input_string);
+
+        thing_to_place.iter().for_each(|(cell_x, cell_y)| {
+            // let cell_x_u32: u32 = cell_x.try_into().expect("problem parsing");
+            let index = self.get_index(cell_x + x, cell_y + y);
+            next[index] = Cell::Alive;
+
+        });
+
+        self.cells = next;
 
         // do the above add_spaceship logic
 
     }
 
 // Vec<(u32, u32)>
-    pub fn parse_text_input(&self, input_string: &str) -> Vec<(usize, usize)> {
+    fn parse_text_input(&self, input_string: &str) -> Vec<(usize, usize)> {
 //         let example = String::from("..OOO...OOO
 
 // O....O.O....O
