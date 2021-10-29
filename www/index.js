@@ -161,3 +161,5 @@ drawGrid();
 drawCells();
 
 play();
+
+// renderLoop()

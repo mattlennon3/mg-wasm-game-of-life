@@ -112,32 +112,81 @@ impl Universe {
         self.cells = next;
     }
 
+    pub fn place_item_on_grid(&mut self, x: u32, y: u32, input_string: &str) -> () {
+        let thing_to_place = self.parse_text_input(parse_text_input);
+
+        // do the above add_spaceship logic
+
+    }
+
 // Vec<(u32, u32)>
-    pub fn parse_text_input(&self) -> () {
-        let example = String::from("..OOO...OOO
+    pub fn parse_text_input(&self, input_string: &str) -> Vec<(usize, usize)> {
+//         let example = String::from("..OOO...OOO
 
-O....O.O....O
-O....O.O....O
-O....O.O....O
-..OOO...OOO
+// O....O.O....O
+// O....O.O....O
+// O....O.O....O
+// ..OOO...OOO
 
-..OOO...OOO
-O....O.O....O
-O....O.O....O
-O....O.O....O
+// ..OOO...OOO
+// O....O.O....O
+// O....O.O....O
+// O....O.O....O
 
-..OOO...OOO");
+// ..OOO...OOO");
 
         // Splitting on "" produces an empty
         // string on either end of the array so we filter these about before collecting them as a Vector of &str.
 
-        example.split("")
+
+        // Mini grid, stamp onto whole grid
+        // Whole grid, with only this input on it, then merge them
+
+
+        // Mini grid
+        //   1 dimensional array
+        //   Only contain coordinates
+
+        let mut row = 0;
+        let mut column = 0;
+
+        let mut mini_grid: Vec<(usize, usize)> = Vec::new();
+
+        // let example2 = String::from("OOO\nOOO\nOO..OO");
+
+        input_string.split("")
             .filter(|x| !x.is_empty())
-            .for_each(|char| {
-            unsafe {
-                log!("{}", char);
-            }
+            .enumerate()
+            .for_each(|(index, char, )| {
+                unsafe {
+                    match char {
+                        // Living
+                        "O" => {
+                            mini_grid.push((row, column));
+                            column += 1;
+                            // log!("{}", char)
+                        },
+                        // Dead
+                        "." => {
+                            column += 1;
+                        },
+                        // Newline
+                        "\n" => {
+                            // We now know the width of the thing we've been passed
+                            row = row + 1;
+                            column = 0;
+                        },
+                        _ => log!("{}", char),
+                    }
+                }
         });
+        
+        unsafe {
+            log!("{:?}", mini_grid);
+        }
+
+        return mini_grid;
+
     }
 
     
