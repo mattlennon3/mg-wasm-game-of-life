@@ -125,9 +125,6 @@ impl Universe {
         });
 
         self.cells = next;
-
-        // do the above add_spaceship logic
-
     }
 
 // Vec<(u32, u32)>
